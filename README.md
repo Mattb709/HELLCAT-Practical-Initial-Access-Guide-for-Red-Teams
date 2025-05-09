@@ -47,7 +47,7 @@ Important: All content is provided for educational use only. Unauthorized penetr
 - Google ("rce cve")  
 
 #### Find Vulnerable Hosts:
-- en.fofa.info (3000 free credits per new account - use new Tor circuit and a disposible email from Guerilla Mail)  
+- en.fofa.info (3000 free credits per new account - use new Tor circuit and a disposible email from Guerrilla Mail)  
 - leakix.net  
 - shodan.io  
 - censys.io  
