@@ -724,3 +724,39 @@ split -b 1M largefile chunk_
 - Use `nohup` or `tmux` for long-running operations
 - Chain commands with `&&` for sequential execution
 - Test all commands in a lab environment first
+
+---
+
+## Future Additions
+
+**Planned Content Expansions:**
+
+- **Attack Surface Mapping**  
+  `[ ]` Add detailed subdomain enumeration techniques  
+  `[ ]` Include cloud asset discovery methods  
+  `[ ]` Expand network visualization examples  
+
+- **Evasion Techniques**  
+  `[ ]` Deep dive into process injection  
+  `[ ]` Add artifactless execution patterns  
+  `[ ]` Cover traffic morphing strategies  
+
+- **Sliver Beacons**  
+  `[ ]` Advanced beacon configuration options  
+  `[ ]` OPSEC considerations for beacons  
+  `[ ]` Beacon tasking scenarios  
+
+- **Pivot Walkthrough**  
+  `[ ]` Multi-hop SSH tunneling  
+  `[ ]` IPv6 pivoting techniques  
+  `[ ]` Router-specific pivoting  
+
+- **Domain Fronting**  
+  `[ ]` Cloud provider-specific setups  
+  `[ ]` Detection avoidance measures  
+  `[ ]` CDN configuration examples  
+
+- **DNS Tunneling**  
+  `[ ]` DNScat2 setup guide  
+  `[ ]` Alternative DNS exfil tools  
+  `[ ]` Defensive detection methods  
