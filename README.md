@@ -283,3 +283,5 @@ expired=id
 ### Outcome
 - **14+ days downtime** at time of writing  
 - Data successfully monetized
+
+## C2 Infrastructure Setup
