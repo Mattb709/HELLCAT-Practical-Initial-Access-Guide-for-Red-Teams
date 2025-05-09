@@ -161,12 +161,12 @@ For this walkthrough, we'll use a fresh N-day vulnerability:
 **CVE-2024-0012**  
 PAN-OS Authentication Bypass → Remote Code Execution
 
-### Step 1: Locate the Exploit
+**Step 1: Locate the Exploit**
 1. Searched sploitus.com for the CVE
 2. Found working PoC at:  
    [github.com/TalatumLabs/CVE-2024-0012_CVE-2024-9474_PoC](https://github.com/TalatumLabs/CVE-2024-0012_CVE-2024-9474_PoC)
 
-### Step 2: Find Vulnerable Targets
+**Step 2: Find Vulnerable Targets**
 1. Create account on [en.fofa.info](https://en.fofa.info)
 2. Search `"PanOS"`  
 3. Filter results by:  
@@ -174,7 +174,7 @@ PAN-OS Authentication Bypass → Remote Code Execution
    - Country/port filters (optional)
 4. Export results
 
-### Step 3: Format Target List
+**Step 3: Format Target List**
 Convert results to this format (use AI or scripting):
 ```
 https://1.1.1.1:4443/
@@ -184,7 +184,7 @@ https://4.4.4.4:443/
 ```
 Save as `ips.txt`
 
-### Step 4: Mass Vulnerability Check
+**Step 4: Mass Vulnerability Check**
 Run the checker:  
 ```bash
 python3 checker.py ips.txt --no-verify >> out.txt 2>&1
@@ -200,7 +200,7 @@ After completion, extract vulnerable hosts:
 cat out.txt | grep 'is vuln'
 ```
 
-### Step 5: Exploitation
+**Step 5: Exploitation**
 Execute the PoC against vulnerable targets:  
 ```bash
 python3 poc.py target_url
