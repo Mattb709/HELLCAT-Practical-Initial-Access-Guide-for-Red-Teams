@@ -15,3 +15,59 @@ Important: All content is provided for educational use only. Unauthorized penetr
 7. Network Pivoting Fundamentals  
 8. Operational Security: Reducing Footprint  
 9. Command Cheat Sheet 
+
+## 1. Resources
+
+### CVE Databases:
+- MITRE CVE Database  
+- National Vulnerability Database (NVD)  
+- Exploit Database (Exploit-DB)  
+
+### Security News Platforms:
+- Search LinkedIn for 'rce cve'  
+- Follow sites like:  
+  - BleepingComputer  
+  - ThreatPost  
+  - The Hacker News  
+- Newsletters:  
+  - Cybersecurity Insiders  
+  - DarkReading  
+
+### Vendor Security Advisories:
+- Monitor advisories from:  
+  - Microsoft  
+  - Cisco  
+  - Adobe  
+  - Other major vendors  
+
+### Tools:
+#### Find New CVEs:
+- LinkedIn  
+- YouTube ("CVE")  
+- Google ("rce cve")  
+
+#### Find Vulnerable Hosts:
+- en.fofa.info (3000 free credits per new account - use new Tor circuit)  
+- leakix.net  
+- shodan.io  
+- censys.io  
+
+#### Find Exploit Scripts:
+- github.com  
+- sploitus.com  
+- 0day.today  
+
+### Researching Proof-of-Concept (PoC) Exploits:
+#### Platforms:
+- GitHub repositories (search "PoC CVE-xxxx-xxxx")  
+- Exploit-DB (use advanced search)  
+- Packet Storm Security  
+
+#### Evaluating PoCs:
+- **Authenticity**: Verify through trusted platforms/community feedback  
+- **Replicability**: Test in controlled, isolated environment  
+- **Complexity**: Analyze prerequisites (privileges/configurations)  
+
+#### Key Tools:
+- Metasploit Framework (exploit testing)  
+- Python/scripting knowledge (for PoC modification)  
