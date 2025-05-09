@@ -207,7 +207,7 @@ python3 poc.py target_url
 ```
 **Result:** Reverse shell obtained
 
-## Case Study: Indonesian Government Ransomware Attack
+## 3. Case Study: Indonesian Government Ransomware Attack
 
 **Target:** [bppkad.blorakab.go.id](https://bppkad.blorakab.go.id/)
 
