@@ -72,7 +72,7 @@ Important: All content is provided for educational use only. Unauthorized penetr
 - Metasploit Framework (exploit testing)  
 - Python/scripting knowledge (for PoC modification)  
 
-## 2. Walkthroughs (& How Pinger.com Was Breached)
+## 2. Walkthroughs 
 
 **Note:** I'll give you all the tools I used in these walkthroughs. If you can't find something, message me and I'll help you out.
 
