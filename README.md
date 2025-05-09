@@ -71,3 +71,7 @@ Important: All content is provided for educational use only. Unauthorized penetr
 #### Key Tools:
 - Metasploit Framework (exploit testing)  
 - Python/scripting knowledge (for PoC modification)  
+
+
+
+I am actively completing this ...
