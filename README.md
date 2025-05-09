@@ -206,4 +206,4 @@ Execute the PoC against vulnerable targets:
 python3 poc.py target_url
 ```
 **Result:** Reverse shell obtained
-```
+
