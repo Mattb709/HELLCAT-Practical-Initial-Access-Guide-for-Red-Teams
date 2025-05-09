@@ -432,3 +432,69 @@ echo "/usr/sbin/sshd" >> /etc/rc.local
   - Limit CPU/memory usage
 
 *Pro Tip:* Combine multiple methods for resilient persistence while maintaining operational security.
+
+## 6. Targeted Attack Methodologies
+
+### Core Principles
+1. **Reconnaissance First**  
+   Dedicate substantial time to mapping the attack surface
+
+2. **Multi-Vector Approach**  
+   Combine:
+   - Social engineering
+   - Exploits
+   - Physical breaches
+
+3. **Continuous Adaptation**  
+   Regularly update tools/techniques to bypass defenses
+
+4. **Deception Tactics**  
+   Implement decoy activities to mislead defenders
+
+### High-Value Targets
+| Target Type          | Focus Area                     | Monetization Potential |
+|----------------------|--------------------------------|------------------------|
+| Financial Systems    | Transactional databases        | Direct financial gain  |
+| Healthcare Records   | Patient data repositories      | High black market value|
+| ICS/SCADA Systems   | Critical infrastructure       | Disruption/ransom      |
+
+### Exfiltration Techniques
+- **Data Encryption**: Mask stolen data in transit
+- **Cloud Storage**: Use services like:
+  - Dropbox
+  - Google Drive  
+  as transfer intermediaries
+
+### Execution Workflow
+
+#### Phase 1: Reconnaissance
+```bash
+# Passive scanning
+amass enum -passive -d example.com
+
+# Active scanning (with brute force)
+amass enum -active -d example.com
+
+# Save results
+amass enum -d example.com -o output.txt
+
+# Network visualization
+amass viz -d example.com -o network_graph.gexf
+```
+
+#### Phase 2: Attack Surface Mapping
+*Example: Targeting AT&T*
+1. Discover all related domains (att.com, *.att.com)
+2. Identify exposed services
+3. Map internal network relationships
+
+#### Phase 3: Weaponization
+- Develop/select exploits for identified vulnerabilities
+- Create tailored payloads
+- Establish initial access points
+
+### Key Considerations
+- **Thoroughness**: Comprehensive recon enables precise targeting
+- **Patience**: Quality reconnaissance takes time
+- **Opportunity Spotting**: Look for "open windows" in defenses during mapping
+
