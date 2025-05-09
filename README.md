@@ -153,7 +153,7 @@ Let me walk you through exactly how we got into Pinger.com step-by-step. Here's 
      - Complete source code
    - Fun fact: Pinger owns TextFree - the biggest free phone number app in North America!
 
-## Walkthrough 2: PAN-OS Exploit Chain
+### Walkthrough 2: PAN-OS Exploit Chain
 
 For this walkthrough, we'll use a fresh N-day vulnerability:
 
