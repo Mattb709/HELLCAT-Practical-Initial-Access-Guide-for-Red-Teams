@@ -92,7 +92,7 @@ Let me walk you through exactly how we got into Pinger.com step-by-step. Here's 
    - Searched for it on sploitus.com and found a Proof of Concept (PoC)
      - Remember: Not all PoCs are complete exploits!
    - Followed the source link to GitHub:  
-     https://github.com/alt3kx/CVE-2022-1388
+     https://github.com/alt3kx/CVE-2022-1388_PoC
 
 2. **Testing the Exploit**
    - Now we have two options:
