@@ -281,7 +281,7 @@ expired=id
 - Immediate effect: Site showed database connection errors
 
 ### Outcome
-- **14+ days downtime** at time of writing  
+- **14+ days downtime**  
 - Data successfully monetized
 
 ## 4. C2 Infrastructure Setup
